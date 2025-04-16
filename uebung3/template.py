@@ -16,7 +16,7 @@ def filter1(img: npt.NDArray[np.uint8], filter: npt.NDArray[np.float64], off: in
                 for l in range(len(filter)):
                     cur_px += img[i - border + k, j - border + l] * filter[k, l]
 
-            filtered_img[i - border][j - border] = cur_px
+            filtered_img[i//off - border][j//off - border] = cur_px
     return filtered_img
 
 img = my_lib.read_bw_img("lena.jpg")
@@ -85,7 +85,7 @@ def filter2(img, filter, off, edge):
     return filter1(extended_img, filter, off)
 
 
-test = filter2(img, filter_t2, 1, "continue")
+test = filter2(img, filter_t2, 2, "continue")
 io.imsave("./savetest.jpg", test)
 
 
