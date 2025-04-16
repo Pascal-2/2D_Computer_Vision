@@ -12,6 +12,8 @@ def plot_img(img, bw=False):
         plt.axis('off')
         plt.show()
 
+def read_bw_img(path:str):
+    return grayscale(io.imread(path))
 
 def plot_hist(hist):
     plt.figure(figsize=(16, 9))
@@ -34,15 +36,14 @@ def bw_histogram(img, cumulative=False, norm=False):
 
     return hist
 
-def grayscale(imge_rgb):
-    bw_img = []
-    for row in imge_rgb:
-        new_row = []
-        for pixel in row:
-            avg = sum([int(x) for x in pixel]) // 3
-            new_row.append(avg)
-        bw_img.append(np.array(new_row, dtype="uint8"))
-    return np.array(bw_img)
+def grayscale(img_rgb):
+
+    bw_img = np.empty((len(img_rgb), len(img_rgb[0])), dtype=np.uint8)
+
+    for i in range(len(img_rgb)):
+        for j in range(len(img_rgb[0])):
+            bw_img[i][j] = np.sum(img_rgb[i][j]) // 3
+    return bw_img
 
 def mirror(image, isVertical=True):
     if isVertical:
