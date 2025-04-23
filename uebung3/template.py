@@ -96,6 +96,72 @@ def rgb2gray(rgb):
     gray = 0.2989 * r + 0.5870 * g + 0.1140 * b
 
     return gray
+"""
+Fragen 4) 
+1. Arten und Eigenschaften von linearen Filtern:
+Glättungsfilter (Tiefpässe): Boxfilter, Gaußfilter
+Schärfungsfilter (Hochpässe): Ableitungsfilter, 
+
+Separable Filter (zerlegbar in Vektoren die multipliziert wieder den Filter ergeben 
+und deswegen zu schnelleren Berechnungen führen) vs nicht separable Filter.
+
+Filter zur Kantendetektion (auch oft über Ableitung)
+
+Eigenschaft: Gewichtete Summe der Eingangspixelwerte  (-> linear)
+
+5) Der Unterschied zwischen linearen und nicht linearen Filtern liegt darin,
+dass mehr als nur eine gewichtete Summe der Eingangspixelwerte berechnet werden kann (-> nicht linear).
+"""
+
+# Medianfilter:
+# Heapsort ist gut geeignet, wegen effizienter Laufzeit (avg case O(log(n))) und in-place Sortierung.
+# Heapsort hat nicht den gleichen Worst-Case wie Quicksort.
+def medianFilter(in_img, filter_width, offset = 1):
+    if filter_width % 2 == 0:
+        print("medianFilter says: The filter_width was updated to the next uneven number!")
+        filter_width += 1
+    k = filter_width // 2
+    out_img = np.empty((((len(in_img)-2*k) // offset),
+                        ((len(in_img[0])-2*k) // offset)), dtype=np.uint8)
+    for i in range(k, len(in_img) - k, offset):
+        for j in range(k, len(in_img[0]) - k, offset):
+            filter_array = np.empty((filter_width ** 2))
+            f_index = 0
+            for f_i in range(i - k, i + k + 1):
+                for f_j in range(j - k, j + k + 1):
+                    filter_array[f_index] = in_img[f_i][f_j]
+                    f_index += 1
+            filter_array = np.sort(filter_array, kind='heapsort')
+            out_img[(i-k) // offset][(j-k) // offset] = filter_array[k]
+    return out_img
+"""
+width = 5
+medimage0 = img
+medimage1 = medianFilter(medimage0, width)
+medimage2 = medianFilter(medimage1, width)
+medimage3 = medianFilter(medimage2, width)
+my_lib.plot_img(medimage1, True)
+my_lib.plot_img(medimage2, True)
+my_lib.plot_img(medimage3, True)
+"""
+
+
+def medianRecursion(in_img, max_depth):
+    if max_depth == 0:
+        return in_img
+    return medianRecursion(medianFilter(in_img, 5), max_depth - 1)
+
+my_lib.plot_img(medianRecursion(img, 15), True)
+
+# Vergleich der verschienenen Filter: Glättungsfilter erzeugen Unschärfe
+# Medianfilter 'verschluckt' Details und 'füllt' Flächen gleichmäßiger aus, erhält aber größere Kanten.
+# Wird der Medianfilter recursiv angewendet, verwandelt sich das Bild in Flecken. Bei hoher Rekursionstiefe
+# wird das Bild entweder schwarz oder weiß.
+# Kleine Filter erhalten mehr Details bzw. wirken in einem anderen Frequenzrahmen.
+# Große Filter können prinzipiell mehr 'verschmieren' und tiefe Frequenzen 'detektieren'.
+
+
+
 
 """
 if __name__ == "__main__":
