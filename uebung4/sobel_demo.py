@@ -21,6 +21,7 @@ start = time.time()
 # TODO: filter image in x direction (nd.sobel(gray, filter_x))
 sobel_x = nd.sobel(gray, True)
 end = time.time()
+
 duration = end-start
 print("Duration in milliseconds: ", duration*1000)
 
