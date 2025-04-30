@@ -151,8 +151,14 @@ def medianRecursion(in_img, max_depth):
         return in_img
     return medianRecursion(medianFilter(in_img, 5), max_depth - 1)
 
-my_lib.plot_img(medianRecursion(img, 15), True)
+#my_lib.plot_img(medianRecursion(img, 5), True)
+rec05_img = medianRecursion(img, 5),
+rec10_img = medianRecursion(rec05_img, 5),
+rec15_img = medianRecursion(rec10_img, 5),
+rec20_img = medianRecursion(rec15_img,5),
+rec50_img = medianRecursion(rec20_img, 30)
 
+io.imsave(rec05_img, "rec05.jpg")
 # Vergleich der verschienenen Filter: Glättungsfilter erzeugen Unschärfe
 # Medianfilter 'verschluckt' Details und 'füllt' Flächen gleichmäßiger aus, erhält aber größere Kanten.
 # Wird der Medianfilter recursiv angewendet, verwandelt sich das Bild immer mehr in kaum detaillierte Flächen.
