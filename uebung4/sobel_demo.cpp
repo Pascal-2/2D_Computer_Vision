@@ -1,5 +1,5 @@
-#include<pybind11/pybind11.h>
-#include<pybind11/numpy.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 #include <pybind11/eigen.h>
 #include <array>
 #include <iostream>
@@ -8,7 +8,7 @@ namespace py = pybind11;
 
 
 Eigen::MatrixXd sobel(Eigen::MatrixXd gray_img, bool is_x_dir) {
-    
+
     // TODO: implement filter operation
     std::array<double, 3> filter1;
     std::array<double, 3> filter2;
