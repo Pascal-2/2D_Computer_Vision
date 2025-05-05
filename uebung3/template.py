@@ -132,7 +132,7 @@ def medianFilter(in_img, filter_width, offset = 1):
                     filter_array[f_index] = in_img[f_i][f_j]
                     f_index += 1
             filter_array = np.sort(filter_array, kind='heapsort')
-            out_img[(i-k) // offset][(j-k) // offset] = filter_array[k]
+            out_img[(i-k) // offset][(j-k) // offset] = filter_array[len(filter_array)//2]
     return out_img
 """
 width = 5
@@ -151,16 +151,24 @@ def medianRecursion(in_img, max_depth):
         return in_img
     return medianRecursion(medianFilter(in_img, 5), max_depth - 1)
 
-my_lib.plot_img(medianRecursion(img, 15), True)
+#my_lib.plot_img(medianRecursion(img, 5), True)
+rec05_img = medianRecursion(img, 5),
+rec10_img = medianRecursion(rec05_img, 5),
+rec15_img = medianRecursion(rec10_img, 5),
+rec20_img = medianRecursion(rec15_img,5),
+rec50_img = medianRecursion(rec20_img, 30)
 
+io.imsave(rec05_img, "rec05.jpg")
 # Vergleich der verschienenen Filter: Glättungsfilter erzeugen Unschärfe
 # Medianfilter 'verschluckt' Details und 'füllt' Flächen gleichmäßiger aus, erhält aber größere Kanten.
-# Wird der Medianfilter recursiv angewendet, verwandelt sich das Bild in Flecken. Bei hoher Rekursionstiefe
-# wird das Bild entweder schwarz oder weiß.
+# Wird der Medianfilter recursiv angewendet, verwandelt sich das Bild immer mehr in kaum detaillierte Flächen.
+# Bei hoher Rekursionstiefe wird das Bild immer mehr grau in grau erscheinen.
 # Kleine Filter erhalten mehr Details bzw. wirken in einem anderen Frequenzrahmen.
 # Große Filter können prinzipiell mehr 'verschmieren' und tiefe Frequenzen 'detektieren'.
 
-
+pepper_image = my_lib.read_bw_img("pepper.jpg")
+out_pepper = medianFilter(pepper_image, 3)
+my_lib.plot_img(out_pepper, True)
 
 
 """
