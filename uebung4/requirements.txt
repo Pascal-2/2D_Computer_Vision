@@ -1,0 +1,6 @@
+numpy
+matplotlib
+scikit-image
+python-dev-tools
+pybind11
+notebook
