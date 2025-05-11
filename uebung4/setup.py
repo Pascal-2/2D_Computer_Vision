@@ -5,7 +5,7 @@ ext_modules = [
     Extension(
         "sobel_demo",
         ["sobel_demo.cpp"],
-        include_dirs=[pybind11.get_include(), "/usr/include/eigen3" ],
+        include_dirs=[pybind11.get_include(), "C:/eigen3" ],
         language="c++",
     )
 ]
