@@ -50,3 +50,16 @@ def mirror(image, isVertical=True):
         return image[:, ::-1]
     else:
         return image[::-1]
+
+
+#function for image plotting
+def show_comparison(original, processed, title1, title2):
+    plt.figure(figsize=(16, 8))
+    plt.subplot(1, 2, 1)
+    plt.imshow(original, cmap="gray")
+    plt.title(title1)
+    plt.axis("off")
+    plt.subplot(1, 2, 2)
+    plt.imshow(processed, cmap="gray")
+    plt.title(title2)
+    plt.axis("off")
